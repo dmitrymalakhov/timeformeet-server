@@ -2,9 +2,11 @@
   "name": "timeformeet-server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/start.js",
+    "dev": "nodemon src/start.js",
+    "test": "tap --no-coverage  --no-esm"
   },
   "repository": {
     "type": "git",
@@ -15,5 +17,16 @@
   "bugs": {
     "url": "https://github.com/dmitrymalakhov/timeformeet-server/issues"
   },
-  "homepage": "https://github.com/dmitrymalakhov/timeformeet-server#readme"
+  "homepage": "https://github.com/dmitrymalakhov/timeformeet-server#readme",
+  "dependencies": {
+    "fastify": "3.27.4"
+  },
+  "devDependencies": {
+    "tap": "^14.10.2",
+    "nodemon": "^2.0.1"
+  },
+  "keywords": ["fastify", "node.js", "backend", "server", "http"],
+  "eslintConfig": {
+    "sourceType": "script"
+  }
 }
