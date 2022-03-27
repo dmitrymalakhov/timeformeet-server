@@ -1,9 +1,10 @@
 /* eslint strict:"off" */
 'use strict';
 
-const fastify = require('fastify');
+import fastify from 'fastify';
+import fetch from 'node-fetch';
 
-function build(opts) {
+export const build = (opts) => {
   const app = fastify(opts);
 
   app.get('/', async (request, reply) => {
@@ -11,7 +12,7 @@ function build(opts) {
   });
 
   app.get(
-    '/hello',
+    '/login',
     {
       query: {
         name: {
@@ -20,14 +21,9 @@ function build(opts) {
       }
     },
     async (request, reply) => {
-      const { name } = request.query;
-      return { hello: name || 'no name!' };
+      // const { token } = request.query;
     }
   );
 
   return app;
-}
-
-module.exports = {
-  build
 };

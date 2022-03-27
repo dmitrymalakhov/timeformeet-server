@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "src/index.js",
+  "type": "module",
   "scripts": {
-    "start": "node src/start.js",
-    "dev": "nodemon src/start.js",
+    "start": "babel-node --experimental-json-modules src/start.js",
+    "dev": "nodemon --experimental-json-modules --exec babel-node src/start.js",
     "test": "tap --no-coverage  --no-esm"
   },
   "repository": {
@@ -19,7 +20,12 @@
   },
   "homepage": "https://github.com/dmitrymalakhov/timeformeet-server#readme",
   "dependencies": {
-    "fastify": "3.27.4"
+    "@babel/core": "7.17.8",
+    "@babel/node": "7.16.8",
+    "@babel/preset-env": "7.16.11",
+    "es-main": "1.0.2",
+    "fastify": "3.27.4",
+    "node-fetch": "3.2.3"
   },
   "devDependencies": {
     "tap": "^14.10.2",

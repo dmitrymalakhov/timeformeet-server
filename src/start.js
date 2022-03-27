@@ -1,7 +1,8 @@
 /* eslint strict:"off" */
 'use strict';
 
-const { build } = require('./build');
+import { build } from './build.js';
+import esMain from 'es-main';
 
 async function start() {
   const app = build({ logger: true });
@@ -13,6 +14,6 @@ async function start() {
   }
 }
 
-if (require.main === module) {
+if (esMain(import.meta)) {
   start();
 }
