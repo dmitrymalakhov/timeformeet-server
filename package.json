@@ -25,13 +25,21 @@
     "@babel/preset-env": "7.16.11",
     "es-main": "1.0.2",
     "fastify": "3.27.4",
-    "node-fetch": "3.2.3"
+    "node-fetch": "3.2.3",
+    "sequelize": "6.17.0",
+    "sqlite": "4.0.25",
+    "sqlite3": "5.0.2"
   },
   "devDependencies": {
     "tap": "^14.10.2",
     "nodemon": "^2.0.1"
   },
-  "keywords": ["fastify", "node.js", "backend", "server", "http"],
+  "keywords": [
+    "fastify",
+    "node.js",
+    "server",
+    "http"
+  ],
   "eslintConfig": {
     "sourceType": "script"
   }

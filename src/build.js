@@ -1,22 +1,39 @@
 /* eslint strict:"off" */
-'use strict';
+"use strict";
 
-import fastify from 'fastify';
-import fetch from 'node-fetch';
+import fastify from "fastify";
+import { Sequelize } from "sequelize";
+import fetch from "node-fetch";
 
 export const build = (opts) => {
   const app = fastify(opts);
 
-  app.get('/', async (request, reply) => {
-    return { hello: 'world' };
+  const sequelize = new Sequelize({
+    dialect: "sqlite",
+    storage: "/sandbox/db/database.db"
+  });
+
+  app.get("/", async (request, reply) => {
+    return { hello: "world" };
+  });
+
+  app.get("/signup", async (request, reply) => {
+    try {
+      await sequelize.authenticate();
+      console.log("Connection has been established successfully.");
+    } catch (error) {
+      console.error("Unable to connect to the database:", error);
+    }
+
+    return { hello: "world" };
   });
 
   app.get(
-    '/login',
+    "/login",
     {
       query: {
         name: {
-          type: 'string'
+          type: "string"
         }
       }
     },
