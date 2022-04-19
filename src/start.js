@@ -1,11 +1,13 @@
 /* eslint strict:"off" */
-'use strict';
+"use strict";
 
-import { build } from './build.js';
-import esMain from 'es-main';
+import esMain from "es-main";
+import { build } from "./build.js";
+import "dotenv/config";
 
 async function start() {
-  const app = build({ logger: true });
+  const app = await build({ logger: true });
+
   try {
     await app.listen(8080);
   } catch (err) {
