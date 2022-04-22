@@ -27,3 +27,31 @@ export const saveToken = async (userId, refreshToken) => {
 
   return token;
 };
+
+export const validateAccessToken = (token) => {
+  try {
+    const userData = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+    return userData;
+  } catch (e) {
+    return null;
+  }
+};
+
+export const validateRefreshToken = (token) => {
+  try {
+    const userData = jwt.verify(token, process.env.JWT_REFRESH_SECRET);
+    return userData;
+  } catch (e) {
+    return null;
+  }
+};
+
+export const removeToken = async (refreshToken) => {
+  const tokenData = await TokenModel.deleteOne({ refreshToken });
+  return tokenData;
+};
+
+export const findToken = async (refreshToken) => {
+  const tokenData = await TokenModel.findOne({ refreshToken });
+  return tokenData;
+};

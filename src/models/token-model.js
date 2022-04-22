@@ -1,14 +1,9 @@
 import { DataTypes } from "sequelize";
-import { UserModel } from "./user-model.js";
 import { getDatabase } from "../utils.js";
 
-export const TokenModel = getDatabase().define("user", {
+export const TokenModel = getDatabase().define("token", {
   user: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: UserModel,
-      key: "id"
-    }
+    type: DataTypes.INTEGER
   },
   refreshToken: {
     type: DataTypes.STRING
