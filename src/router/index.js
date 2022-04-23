@@ -1,4 +1,1 @@
-module.exports = function (fastify, opts, done) {
-  fastify.get('/user');
-  done();
-};
+export { refreshRoute } from "./refresh-route.js";

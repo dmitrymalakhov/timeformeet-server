@@ -7,6 +7,7 @@ import { initDatabase } from "./utils.js";
 import { UserModel } from "./models/user-model.js";
 import { generateToken, saveToken } from "./service/token-service.js";
 import { UserDto } from "./dtos/user-dto.js";
+import { refreshRoute } from "./router/index.js";
 
 export async function build(opts) {
   const sequelize = initDatabase();
@@ -25,6 +26,8 @@ export async function build(opts) {
     await sequelize.authenticate();
     return { f: "f" };
   });
+
+  app.get("/refresh", refreshRoute);
 
   app.post("/signup", async (request, reply) => {
     try {
