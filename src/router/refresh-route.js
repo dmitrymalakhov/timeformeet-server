@@ -2,7 +2,7 @@ export const refreshRoute = async (request, reply) => {
   try {
     const { refreshToken } = request.cookies;
 
-    reply.setCookie("bar", "bar").send({ hello: "world" });
+    reply.send({ refreshToken });
   } catch (e) {
     throw new Error(e);
   }

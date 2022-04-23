@@ -16,7 +16,13 @@ export async function build(opts) {
   await app.register(middie);
   await app.register(fastifyCookie);
 
-  app.use(cors());
+  app.use(
+    cors({
+      origin: "https://22pmdx.csb.app",
+      methods: ["GET", "POST"],
+      credentials: true
+    })
+  );
 
   app.get("/", async (request, reply) => {
     return {};
@@ -58,34 +64,37 @@ export async function build(opts) {
   });
 
   app.post("/signin", async (request, reply) => {
-    const { login, password, name } = JSON.parse(request.body);
+    try {
+      const { login, password, name } = JSON.parse(request.body);
 
-    await sequelize.authenticate();
+      await sequelize.authenticate();
 
-    const user = await UserModel.findOne({ where: { login } });
+      const user = await UserModel.findOne({ where: { login } });
 
-    if (!user) {
-      throw new Error("The user with this login was not found");
+      if (!user) {
+        throw new Error("The user with this login was not found");
+      }
+      const isPassEquals = await bcrypt.compare(password, user.password);
+
+      if (!isPassEquals) {
+        throw new Error(`Invalid password`);
+      }
+
+      const userDto = UserDto(user);
+
+      const tokens = generateToken(userDto);
+      await saveToken(userDto.id, tokens.refreshToken);
+
+      reply
+        .setCookie("refreshToken", tokens.refreshToken, {
+          maxAge: 30 * 24 * 60 * 60 * 1000,
+          sameSite: "none",
+          secure: true
+        })
+        .send({ user: userDto, ...tokens });
+    } catch (e) {
+      throw new Error(e);
     }
-    const isPassEquals = await bcrypt.compare(password, user.password);
-
-    if (!isPassEquals) {
-      throw new Error(`Invalid password`);
-    }
-
-    const userDto = UserDto(user);
-
-    const tokens = generateToken(userDto);
-    await saveToken(userDto.id, tokens.refreshToken);
-
-    reply
-      .code(200)
-      .header("Content-Type", "application/json; charset=utf-8")
-      .setCookie("refreshToken", tokens.refreshToken, {
-        maxAge: 30 * 24 * 60 * 60 * 1000,
-        httpOnly: true
-      })
-      .send({ user: userDto, ...tokens });
   });
 
   return app;
