@@ -1,16 +1,16 @@
 import fastify from "fastify";
 import fastifyCookie from "fastify-cookie";
 import middie from "middie";
-import bcrypt from "bcrypt";
 import cors from "cors";
-import { initDatabase } from "./utils.js";
-import { UserModel } from "./models/user-model.js";
-import { generateToken, saveToken } from "./service/token-service.js";
-import { UserDto } from "./dtos/user-dto.js";
-import { refreshRoute } from "./router/index.js";
+import {
+  refreshRoute,
+  signInRoute,
+  signUpRoute,
+  userRoute
+} from "./routes/index.js";
+import { authMiddleware } from "./middlewares/auth-middleware.js";
 
 export async function build(opts) {
-  const sequelize = initDatabase();
   const app = fastify(opts);
 
   await app.register(middie);
@@ -28,74 +28,14 @@ export async function build(opts) {
     return {};
   });
 
-  app.get("/test", async (request, reply) => {
-    await sequelize.authenticate();
+  app.get("/refresh", refreshRoute);
+  app.post("/signup", signUpRoute);
+  app.post("/signin", signInRoute);
+
+  app.get("/test", { preHandler: [authMiddleware] }, async (request, reply) => {
     return { f: "f" };
   });
-
-  app.get("/refresh", refreshRoute);
-
-  app.post("/signup", async (request, reply) => {
-    try {
-      const { login, password, name } = JSON.parse(request.body);
-
-      await sequelize.authenticate();
-
-      const hashPassword = await bcrypt.hash(password, 3);
-
-      const user = await UserModel.create({
-        login,
-        password: hashPassword,
-        name
-      });
-
-      const userDto = new UserDto(user);
-
-      const tokens = generateToken(userDto);
-      await saveToken(userDto.id, tokens.refreshToken);
-
-      reply
-        .code(200)
-        .header("Content-Type", "application/json; charset=utf-8")
-        .send({ user: userDto, ...tokens });
-    } catch (error) {
-      console.error("Unable to connect to the database:", error);
-    }
-  });
-
-  app.post("/signin", async (request, reply) => {
-    try {
-      const { login, password, name } = JSON.parse(request.body);
-
-      await sequelize.authenticate();
-
-      const user = await UserModel.findOne({ where: { login } });
-
-      if (!user) {
-        throw new Error("The user with this login was not found");
-      }
-      const isPassEquals = await bcrypt.compare(password, user.password);
-
-      if (!isPassEquals) {
-        throw new Error(`Invalid password`);
-      }
-
-      const userDto = UserDto(user);
-
-      const tokens = generateToken(userDto);
-      await saveToken(userDto.id, tokens.refreshToken);
-
-      reply
-        .setCookie("refreshToken", tokens.refreshToken, {
-          maxAge: 30 * 24 * 60 * 60 * 1000,
-          sameSite: "none",
-          secure: true
-        })
-        .send({ user: userDto, ...tokens });
-    } catch (e) {
-      throw new Error(e);
-    }
-  });
+  app.get("/user", { preHandler: [authMiddleware] }, userRoute);
 
   return app;
 }
