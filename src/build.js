@@ -6,7 +6,9 @@ import {
   refreshRoute,
   signInRoute,
   signUpRoute,
-  userRoute
+  userRoute,
+  eventTypesRoute,
+  eventSchedulesRoute
 } from "./routes/index.js";
 import { authMiddleware } from "./middlewares/auth-middleware.js";
 
@@ -35,7 +37,14 @@ export async function build(opts) {
   app.get("/test", { preHandler: [authMiddleware] }, async (request, reply) => {
     return { f: "f" };
   });
+
   app.get("/user", { preHandler: [authMiddleware] }, userRoute);
+  app.get("/events/types", { preHandler: [authMiddleware] }, eventTypesRoute);
+  app.get(
+    "/events/schedules",
+    { preHandler: [authMiddleware] },
+    eventSchedulesRoute
+  );
 
   return app;
 }

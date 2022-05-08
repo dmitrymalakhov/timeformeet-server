@@ -3,10 +3,12 @@ import { getDatabase } from "../utils.js";
 
 export const EventTypeModel = getDatabase().define("event_type", {
   id: {
-    type: DataTypes.INTEGER
+    type: DataTypes.INTEGER,
+    autoIncrement: true
   },
   owner: {
-    type: DataTypes.INTEGER
+    type: DataTypes.INTEGER,
+    primaryKey: true
   },
   start_date: {
     type: DataTypes.DATE
