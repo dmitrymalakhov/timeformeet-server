@@ -20,7 +20,7 @@ export async function build(opts) {
 
   app.use(
     cors({
-      origin: "https://22pmdx.csb.app",
+      origin: "https://k3gxwt.csb.app",
       methods: ["GET", "POST"],
       credentials: true
     })
