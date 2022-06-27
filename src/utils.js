@@ -5,7 +5,7 @@ let sequelize = null;
 export const initDatabase = () => {
   sequelize = new Sequelize("timeformeet", "madgest", "Aa19882002", {
     dialect: "postgres",
-    host: "84.252.139.120",
+    host: "84.201.165.89",
     port: "5432"
   });
   return sequelize;

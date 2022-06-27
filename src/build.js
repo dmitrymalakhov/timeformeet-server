@@ -8,7 +8,8 @@ import {
   signUpRoute,
   userRoute,
   eventTypesRoute,
-  eventSchedulesRoute
+  eventSchedulesRoute,
+  eventScheduledRoute
 } from "./routes/index.js";
 import { authMiddleware } from "./middlewares/auth-middleware.js";
 
@@ -20,7 +21,7 @@ export async function build(opts) {
 
   app.use(
     cors({
-      origin: "https://k3gxwt.csb.app",
+      origin: "https://h5qzuy.csb.app",
       methods: ["GET", "POST"],
       credentials: true
     })
@@ -40,11 +41,17 @@ export async function build(opts) {
 
   app.get("/user", { preHandler: [authMiddleware] }, userRoute);
   app.get("/events/types", { preHandler: [authMiddleware] }, eventTypesRoute);
+
   app.get(
     "/events/schedules",
     { preHandler: [authMiddleware] },
     eventSchedulesRoute
   );
 
+  app.get(
+    "/events/scheduled",
+    { preHandler: [authMiddleware] },
+    eventScheduledRoute
+  );
   return app;
 }

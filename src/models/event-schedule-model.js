@@ -19,6 +19,9 @@ export const EventScheduleModel = getDatabase().define("event_schedule", {
   end_time: {
     type: DataTypes.TIME
   },
+  schedule_type: {
+    type: DataTypes.STRING
+  },
   createdAt: {
     type: DataTypes.DATE
   },
