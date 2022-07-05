@@ -9,7 +9,8 @@ import {
   userRoute,
   eventTypesRoute,
   eventSchedulesRoute,
-  eventScheduledRoute
+  eventScheduledRoute,
+  createEventScheduledRoute
 } from "./routes/index.js";
 import { authMiddleware } from "./middlewares/auth-middleware.js";
 
@@ -27,6 +28,8 @@ export async function build(opts) {
     })
   );
 
+  const middlewares = { preHandler: [authMiddleware] };
+
   app.get("/", async (request, reply) => {
     return {};
   });
@@ -35,23 +38,13 @@ export async function build(opts) {
   app.post("/signup", signUpRoute);
   app.post("/signin", signInRoute);
 
-  app.get("/test", { preHandler: [authMiddleware] }, async (request, reply) => {
-    return { f: "f" };
-  });
+  app.get("/user", middlewares, userRoute);
+  app.get("/events/types", middlewares, eventTypesRoute);
 
-  app.get("/user", { preHandler: [authMiddleware] }, userRoute);
-  app.get("/events/types", { preHandler: [authMiddleware] }, eventTypesRoute);
+  app.get("/events/schedules", middlewares, eventSchedulesRoute);
+  app.get("/events/schedules/:id", middlewares, eventSchedulesRoute);
+  app.get("/events/scheduled", middlewares, eventScheduledRoute);
+  app.post("/events/scheduled", middlewares, createEventScheduledRoute);
 
-  app.get(
-    "/events/schedules",
-    { preHandler: [authMiddleware] },
-    eventSchedulesRoute
-  );
-
-  app.get(
-    "/events/scheduled",
-    { preHandler: [authMiddleware] },
-    eventScheduledRoute
-  );
   return app;
 }

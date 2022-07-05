@@ -6,5 +6,6 @@ export { userRoute } from "./user-route.js";
 export {
   eventTypesRoute,
   eventSchedulesRoute,
-  eventScheduledRoute
+  eventScheduledRoute,
+  createEventScheduledRoute
 } from "./event-route.js";

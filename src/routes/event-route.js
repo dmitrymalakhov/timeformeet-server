@@ -1,3 +1,4 @@
+import md5 from "md5";
 import { EventTypeModel } from "../models/event-type-model.js";
 import { EventScheduleModel } from "../models/event-schedule-model.js";
 import { EventScheduledModel } from "../models/event-scheduled-model.js";
@@ -13,6 +14,32 @@ export const eventSchedulesRoute = async (request, reply) => {
 };
 
 export const eventScheduledRoute = async (request, reply) => {
-  const eventScheduled = await EventScheduledModel.findAll();
+  let eventScheduled = null;
+
+  const { id } = request.params;
+
+  if (id) {
+    eventScheduled = await EventScheduledModel.findOne({ where: { id } });
+  } else {
+    eventScheduled = await EventScheduledModel.findAll();
+  }
+
+  reply.send(eventScheduled);
+};
+
+export const createEventScheduledRoute = async (request, reply) => {
+  const { date, eventSchedulesId, comment, name, email } = JSON.parse(
+    request.body
+  );
+
+  const eventScheduled = await EventScheduledModel.create({
+    date,
+    event_schedules_id: eventSchedulesId,
+    comment,
+    name,
+    email,
+    hash: md5(request.body)
+  });
+
   reply.send(eventScheduled);
 };

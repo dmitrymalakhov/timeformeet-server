@@ -24,6 +24,9 @@ export const EventScheduledModel = getDatabase().define(
     date: {
       type: DataTypes.DATE
     },
+    hash: {
+      type: DataTypes.STRING
+    },
     createdAt: {
       type: DataTypes.DATE
     },
