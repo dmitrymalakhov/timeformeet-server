@@ -9,3 +9,5 @@ export {
   eventScheduledRoute,
   createEventScheduledRoute
 } from "./event-route.js";
+
+export { invitesRoute } from "./invites-route.js";

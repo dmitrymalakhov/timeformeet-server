@@ -9,7 +9,7 @@ export const EventScheduledModel = getDatabase().define(
       primaryKey: true,
       autoIncrement: true
     },
-    event_schedules_id: {
+    eventSchedulesId: {
       type: DataTypes.INTEGER
     },
     name: {

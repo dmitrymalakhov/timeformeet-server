@@ -10,7 +10,8 @@ import {
   eventTypesRoute,
   eventSchedulesRoute,
   eventScheduledRoute,
-  createEventScheduledRoute
+  createEventScheduledRoute,
+  invitesRoute
 } from "./routes/index.js";
 import { authMiddleware } from "./middlewares/auth-middleware.js";
 
@@ -45,6 +46,8 @@ export async function build(opts) {
   app.get("/events/schedules/:id", middlewares, eventSchedulesRoute);
   app.get("/events/scheduled", middlewares, eventScheduledRoute);
   app.post("/events/scheduled", middlewares, createEventScheduledRoute);
+
+  app.get("/invites/:hash", invitesRoute);
 
   return app;
 }
