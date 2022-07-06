@@ -47,7 +47,7 @@ export async function build(opts) {
   app.get("/events/scheduled", middlewares, eventScheduledRoute);
   app.post("/events/scheduled", middlewares, createEventScheduledRoute);
 
-  app.get("/invites/:hash", invitesRoute);
+  app.get("/invitees/:hash", invitesRoute);
 
   return app;
 }
