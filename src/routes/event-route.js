@@ -34,7 +34,7 @@ export const createEventScheduledRoute = async (request, reply) => {
 
   const eventScheduled = await EventScheduledModel.create({
     date,
-    event_schedules_id: eventSchedulesId,
+    eventSchedulesId,
     comment,
     name,
     email,
