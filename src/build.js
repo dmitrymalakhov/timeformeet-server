@@ -8,6 +8,7 @@ import {
   signUpRoute,
   userRoute,
   eventTypesRoute,
+  createEventTypesRoute,
   eventSchedulesRoute,
   eventScheduledRoute,
   createEventScheduledRoute,
@@ -40,7 +41,9 @@ export async function build(opts) {
   app.post("/signin", signInRoute);
 
   app.get("/user", middlewares, userRoute);
+
   app.get("/events/types", middlewares, eventTypesRoute);
+  app.post("/events/types", middlewares, createEventTypesRoute);
 
   app.get("/events/schedules", middlewares, eventSchedulesRoute);
   app.get("/events/schedules/:id", middlewares, eventSchedulesRoute);

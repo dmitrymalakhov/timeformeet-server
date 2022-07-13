@@ -8,6 +8,21 @@ export const eventTypesRoute = async (request, reply) => {
   reply.send(eventTypes);
 };
 
+export const createEventTypesRoute = async (request, reply) => {
+  const { name, location, description, link, color } = JSON.parse(request.body);
+
+  const eventType = await EventTypeModel.create({
+    owner: request.user.id,
+    name,
+    location,
+    description,
+    link,
+    color
+  });
+
+  reply.send(eventType);
+};
+
 export const eventSchedulesRoute = async (request, reply) => {
   const eventSchedule = await EventScheduleModel.findAll();
   reply.send(eventSchedule);

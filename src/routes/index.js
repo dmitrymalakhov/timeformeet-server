@@ -5,6 +5,7 @@ export { userRoute } from "./user-route.js";
 
 export {
   eventTypesRoute,
+  createEventTypesRoute,
   eventSchedulesRoute,
   eventScheduledRoute,
   createEventScheduledRoute
