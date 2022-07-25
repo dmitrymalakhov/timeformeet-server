@@ -36,6 +36,17 @@ export const createEventTypesRoute = async (request, reply) => {
   reply.send(eventType);
 };
 
+export const removeEventTypesRoute = async (request, reply) => {
+  const { id } = JSON.parse(request.body);
+
+  console.log(id);
+  // const eventType = await User.destroy({
+  //   where: {
+  //     id: "Jane"
+  //   }
+  // });
+};
+
 export const eventSchedulesRoute = async (request, reply) => {
   const eventSchedule = await EventScheduleModel.findAll();
   reply.send(eventSchedule);
