@@ -9,7 +9,16 @@ export const eventTypesRoute = async (request, reply) => {
 };
 
 export const createEventTypesRoute = async (request, reply) => {
-  const { name, location, description, link, color } = JSON.parse(request.body);
+  const {
+    name,
+    location,
+    description,
+    link,
+    color,
+    duration,
+    start_date,
+    end_date
+  } = JSON.parse(request.body);
 
   const eventType = await EventTypeModel.create({
     owner: request.user.id,
@@ -17,7 +26,11 @@ export const createEventTypesRoute = async (request, reply) => {
     location,
     description,
     link,
-    color
+    color,
+    duration,
+    start_date,
+    end_date,
+    active: false
   });
 
   reply.send(eventType);
