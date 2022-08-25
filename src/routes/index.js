@@ -8,7 +8,8 @@ export {
   createEventTypesRoute,
   eventSchedulesRoute,
   eventScheduledRoute,
-  createEventScheduledRoute
+  createEventScheduledRoute,
+  removeEventTypesRoute
 } from "./event-route.js";
 
 export { invitesRoute } from "./invites-route.js";

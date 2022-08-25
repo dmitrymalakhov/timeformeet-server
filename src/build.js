@@ -9,6 +9,7 @@ import {
   userRoute,
   eventTypesRoute,
   createEventTypesRoute,
+  removeEventTypesRoute,
   eventSchedulesRoute,
   eventScheduledRoute,
   createEventScheduledRoute,
@@ -25,7 +26,7 @@ export async function build(opts) {
   app.use(
     cors({
       origin: "https://h5qzuy.csb.app",
-      methods: ["GET", "POST"],
+      methods: ["GET", "POST", "DELETE"],
       credentials: true
     })
   );
@@ -44,6 +45,7 @@ export async function build(opts) {
 
   app.get("/events/types", middlewares, eventTypesRoute);
   app.post("/events/types", middlewares, createEventTypesRoute);
+  app.delete("/events/types/:id", middlewares, removeEventTypesRoute);
 
   app.get("/events/schedules", middlewares, eventSchedulesRoute);
   app.get("/events/schedules/:id", middlewares, eventSchedulesRoute);

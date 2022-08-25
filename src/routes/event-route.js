@@ -37,14 +37,23 @@ export const createEventTypesRoute = async (request, reply) => {
 };
 
 export const removeEventTypesRoute = async (request, reply) => {
-  const { id } = JSON.parse(request.body);
+  const { id } = request.params;
 
-  console.log(id);
-  // const eventType = await User.destroy({
-  //   where: {
-  //     id: "Jane"
-  //   }
-  // });
+  const eventType = await EventTypeModel.destroy({
+    where: {
+      id
+    }
+  });
+
+  const eventSchedule = await EventScheduleModel.destroy({
+    where: { event_type_id: eventType }
+  });
+
+  const eventScheduled = await EventScheduledModel.destroy({
+    where: { eventSchedulesId: eventSchedule }
+  });
+
+  reply.send(eventType);
 };
 
 export const eventSchedulesRoute = async (request, reply) => {
