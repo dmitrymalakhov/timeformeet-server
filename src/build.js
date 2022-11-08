@@ -13,7 +13,7 @@ import {
   eventSchedulesRoute,
   eventScheduledRoute,
   createEventScheduledRoute,
-  invitesRoute
+  invitesRoute,
 } from "./routes/index.js";
 import { authMiddleware } from "./middlewares/auth-middleware.js";
 
@@ -25,9 +25,9 @@ export async function build(opts) {
 
   app.use(
     cors({
-      origin: "https://h5qzuy.csb.app",
+      origin: "https://q5nzr0-3000.preview.csb.app",
       methods: ["GET", "POST", "DELETE"],
-      credentials: true
+      credentials: true,
     })
   );
 
